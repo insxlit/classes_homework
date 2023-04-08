@@ -1,3 +1,5 @@
+import statistics
+
 class Student:
     def __init__(self, name, surname, gender):
         self.name = name
@@ -10,10 +12,13 @@ class Student:
 
     def update_grades(self, course, grade):
         if course in self.grades:
-            self.grades[course] += [grade]
+            self.grades[course].append(grade)
         else:
             self.grades[course] = [grade]
-        self.average_grade = self.__count_average()
+
+        all_values = [value for value in self.grades.values()]
+        all_values_flat = [item for sublist in all_values for item in sublist]
+        self.average_grade = statistics.mean(all_values_flat)
 
     def __count_average(self):
         __marks = 0
@@ -30,3 +35,11 @@ class Student:
                f"Курсы в процессе изучения: {', '.join(self.courses_in_progress)}\n" \
                f"Завершенные курсы: {', '.join(self.finished_courses)}"
 
+    def __lt__(self, other):
+        return self.average_grade < other.average_grade
+
+    def __eq__(self, other):
+        return self.average_grade == other.average_grade
+
+    def __gt__(self, other):
+        return self.average_grade > other.average_grade

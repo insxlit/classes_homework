@@ -29,3 +29,12 @@ class Lecturer(Mentor):
         return f"Имя: {self.name}\n" \
                f"Фамилия: {self.surname}\n" \
                f"Средняя оценка за лекции: {self.average_grade}"
+
+    def __lt__(self, other):
+        return self.average_grade < other.average_grade
+
+    def __eq__(self, other):
+        return self.average_grade == other.average_grade
+
+    def __gt__(self, other):
+        return self.average_grade > other.average_grade
